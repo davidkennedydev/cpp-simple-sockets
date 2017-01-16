@@ -8,7 +8,7 @@ using namespace std;
 
 int main(void) {
 
-	Socket socket("12345"); // Waits for a client connection.
+	Socket socket(12345); // Waits for a client connection.
 
 	string question;
 	socket >> question;
