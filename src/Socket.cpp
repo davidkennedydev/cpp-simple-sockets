@@ -14,4 +14,16 @@ namespace simple {
 	private:
 		boost::asio::io_service io_service;
 	};
+
+	class ServerSocket {
+	public:
+		ServerSocket (int port);
+		virtual ~ServerSocket ();
+	
+		ServerSocket operator <<(const std::string &message);
+		ServerSocket operator >>(std::string &message);
+	private:
+		boost::asio::io_service io_service;
+	};
+
 } /* simple */ 
