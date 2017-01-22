@@ -34,18 +34,10 @@ namespace simple {
 		boost::asio::connect(this->socket, endpoint);
 	}
 
-	SocketBuffer::int_type SocketBuffer::overflow(SocketBuffer::int_type character) {
-		if (character == EOF) return EOF;
-		*pptr() = character;
-		return 0;
-	}
-
 	int SocketBuffer::sync() {
 		boost::system::error_code error_code;
-		boost::asio::write(this->socket, boost::asio::buffer(this->outputBuffer), error_code);
-		if (error_code == boost::asio::error::broken_pipe)
-			return -1;	
-		return 0;
+		boost::asio::write(this->socket, boost::asio::buffer(this->outputBuffer.data(), pptr() - pbase()), error_code);
+		return (error_code == boost::asio::error::broken_pipe)? -1 : 0;
 	}
 } /* simple */ 
 
