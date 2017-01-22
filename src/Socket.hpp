@@ -3,17 +3,18 @@
 #include <ostream>
 #include <string>
 #include <boost/asio.hpp>
+#include <boost/asio/ip/tcp.hpp>
+#include <boost/array.hpp>
 
 namespace simple {
 	using std::string;
 
-	class SocketBuffer : std::streambuf {
+	class SocketBuffer : public std::streambuf {
 		static constexpr unsigned int BUFFER_SIZE = 255;
 	public:
 		SocketBuffer (string address, unsigned short port);
 		virtual ~SocketBuffer ();
 
-		int_type overflow(int_type character) override;
 		int sync() override;
 
 	private:
@@ -32,6 +33,10 @@ namespace simple {
 		tcp::resolver::query query(address, std::to_string(port));
 		tcp::resolver::iterator endpoint = this->resolver.resolve(query);
 		boost::asio::connect(this->socket, endpoint);
+	}
+
+	SocketBuffer::~SocketBuffer() {
+		sync();
 	}
 
 	int SocketBuffer::sync() {
