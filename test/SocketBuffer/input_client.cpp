@@ -15,45 +15,51 @@ using boost::asio::ip::tcp;
 
 size_t bytesReaded;
 std::string message;
-std::string expectedMessage = "I'm here!";
+std::string expectedMessage = "I'm here!\n";
 boost::system::error_code error;
+
+const int PORT = 12346;
 
 /// Server side, boost pure implementation
 /**
  * Open port listening for a connection,
- * when someone connects waits for a message.
+ * when someone connects send a message.
  */
 void server(void) {
 	boost::asio::io_service io_service;
 
-	const unsigned short port = 12345;
+	const unsigned short port = PORT;
 	tcp::acceptor acceptor(io_service, tcp::endpoint(tcp::v4(), port));
 
 	tcp::socket socket(io_service);
 	acceptor.accept(socket);
 
-	std::array<char, 100> buffer;
-
-	bytesReaded = socket.read_some(
-			boost::asio::buffer(buffer.data(), buffer.size()),
-			error);
-	message = std::string(buffer.begin(), buffer.begin() + bytesReaded);
+	boost::asio::write(socket, boost::asio::buffer(expectedMessage), error);
 }
 
 #include "../../src/SocketBuffer.hpp"
-#include <ostream>
+#include <istream>
 
 /// Client side using simple sockets
 /**
- * Connect to server and send a message.
+ * Connect to server and receive a message.
  */
 void client(void) {
 	using namespace simple;
 
-	SocketBuffer buffer("localhost", 12345);
-	std::ostream out(&buffer);
+	SocketBuffer socketBuffer("localhost", PORT);
+	std::istream in(&socketBuffer);
+	
+	std::string word;
 
-	out << expectedMessage << std::endl;
+	in >> word;
+	message += word;
+	message += ' ';
+	in >> word;
+	message += word;
+	message += '\n';
+
+	bytesReaded = message.size();
 }
 
 #include <thread>
@@ -68,10 +74,10 @@ int main(void) {
 	std::this_thread::sleep_for(std::chrono::milliseconds(100));
 	client();
 	serverRun.join();
-
+	
 	assert(error == 0);
-	assert(bytesReaded == expectedMessage.size() + 1);
-	assert(message == expectedMessage + "\n");
+	assert(bytesReaded == expectedMessage.size());
+	assert(message == expectedMessage);
 
 	return 0;
 }
