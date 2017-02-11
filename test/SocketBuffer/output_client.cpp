@@ -40,7 +40,7 @@ void server(void) {
 	message = std::string(buffer.begin(), buffer.begin() + bytesReaded);
 }
 
-#include "../../src/Socket.hpp"
+#include "../../src/SocketBuffer.hpp"
 #include <ostream>
 
 /// Client side using simple sockets
@@ -68,7 +68,7 @@ int main(void) {
 	std::this_thread::sleep_for(std::chrono::milliseconds(100));
 	client();
 	serverRun.join();
-	
+
 	assert(error == 0);
 	assert(bytesReaded == expectedMessage.size() + 1);
 	assert(message == expectedMessage + "\n");
