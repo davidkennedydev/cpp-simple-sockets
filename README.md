@@ -1,3 +1,5 @@
+[![Travis](https://img.shields.io/travis/rust-lang/rust.svg)](https://travis-ci.org/DavidUser/cpp-simple-sockets)
+
 # cpp-simple-sockets
 An stupid library to use sockets easy. 
 
@@ -16,3 +18,4 @@ An stupid library to use sockets easy.
     ```
     sudo docker run --rm -it daviduser/cpp-simple-sockets /bin/bash
     ```
+* The .travis.yml build a _Ubuntu Trusty_ with _GCC g++ 5_ on *travis-ci*

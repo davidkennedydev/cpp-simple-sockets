@@ -1,7 +1,7 @@
-CXX=g++
-DEBUG=-g -D_GLIBCXX_DEBUG
-FLAGS=-std=c++1y 
-LIBRARIES=-lboost_system -pthread 
+CXX ?= g++
+DEBUG = -g -D_GLIBCXX_DEBUG
+FLAGS = -std=c++1y
+LIBRARIES = -lboost_system -pthread 
 
 all: bin/output_client bin/input_client
 
