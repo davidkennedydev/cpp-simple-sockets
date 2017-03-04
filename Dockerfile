@@ -15,7 +15,8 @@ RUN apt-get install -y \
 RUN apt-get install -y \
 	libstdc++6 \
 	libpthread-stubs0-dev \
-	libboost-dev
+	libboost-dev \
+	libboost-system-dev
 
 ADD . /app
 
