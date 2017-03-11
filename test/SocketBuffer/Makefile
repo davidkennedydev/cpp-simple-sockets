@@ -1,23 +1,34 @@
 CXX ?= g++
 DEBUG = -g -D_GLIBCXX_DEBUG
-FLAGS = -std=c++1y
+GCOV_FLAGS = -coverage
+FLAGS = -std=c++1y $(GCOV_FLAGS)
 LIBRARIES = -lboost_system -pthread 
+COV=gcov
 
-all: bin/output_client bin/input_client
+BIN_PATH = bin
 
-bin:
+DRIVERS = output_client.cpp input_client.cpp
+RUNABLE = $(%.cpp:bin/%)
+
+all: $(RUNABLE)
+
+
+$(BIN_PATH):
 	mkdir -p $@
 
-bin/output_client: output_client.cpp | bin
-	$(CXX) $(FLAGS) $^ -o $@ $(LIBRARIES)
-
-bin/input_client: input_client.cpp | bin
+bin/%: %.cpp | bin
 	$(CXX) $(FLAGS) $^ -o $@ $(LIBRARIES)
 
 test: bin/output_client bin/input_client
 	./bin/output_client
 	./bin/input_client
 
-clean: bin
-	-rm -rf $^
+coverage: $(DRIVERS) | test
+	$(COV) -r $^
+
+clean:
+	-@rm -rf $(BIN_PATH) 2> /dev/null || true
+	-@rm *.gcno 2> /dev/null || true
+	-@rm *.gcda 2> /dev/null || true
+	-@rm *.gcov 2> /dev/null || true
 	

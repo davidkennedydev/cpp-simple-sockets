@@ -30,3 +30,8 @@
 
 # Temporary swap files
 *.swp
+
+# gcov files
+*.gcno
+*.gcda
+*.gcov

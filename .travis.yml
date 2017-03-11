@@ -24,9 +24,12 @@ install:
   - sudo apt-get install -qq libpthread-stubs0-dev
   - sudo apt-get install -qq libboost-dev
   - sudo apt-get install -qq libboost-system-dev
-
+  
 # command to run tests
 script: 
   - g++ --version
-  - make test
+  - make coverage
+
+after_success:
+  - bash <(curl -s https://codecov.io/bash) -X gcov
 
