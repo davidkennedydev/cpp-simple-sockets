@@ -1,4 +1,4 @@
-[![Travis](https://img.shields.io/travis/DavidUser/cpp-simple-sockets.svg)](https://travis-ci.org/DavidUser/cpp-simple-sockets)
+[![Travis](https://img.shields.io/travis/DavidUser/cpp-simple-sockets.svg?maxAge=3600&label=build:%20GCC%205%20|%20C%2b%2b17%20)](https://travis-ci.org/DavidUser/cpp-simple-sockets)
 [![Codecov](https://img.shields.io/codecov/c/github/DavidUser/cpp-simple-sockets.svg)](https://codecov.io/gh/DavidUser/cpp-simple-sockets/)
 
 # cpp-simple-sockets
