@@ -1,5 +1,5 @@
-[![Travis](https://travis-ci.org/DavidUser/cpp-simple-sockets.svg)](https://travis-ci.org/DavidUser/cpp-simple-sockets)
-[![Codecov](http://codecov.io/github/DavidUser/cpp-simple-sockets/coverage.svg)](https://codecov.io/gh/DavidUser/cpp-simple-sockets/)
+[![Travis](https://img.shields.io/travis/DavidUser/cpp-simple-sockets.svg)](https://travis-ci.org/DavidUser/cpp-simple-sockets)
+[![Codecov](https://img.shields.io/codecov/c/github/DavidUser/cpp-simple-sockets.svg)](https://codecov.io/gh/DavidUser/cpp-simple-sockets/)
 
 # cpp-simple-sockets
 An stupid library to use sockets easy. 
