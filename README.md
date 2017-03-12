@@ -11,12 +11,16 @@ An stupid library to use sockets easy.
 ## Builds
 * This Dockerfile build and test on ubuntu with gcc.
     Build and run that container with command:
+
     ```
     sudo docker build -t daviduser/cpp-simple-sockets
+
     sudo docker run --rm -it daviduser/cpp-simple-sockets
     ```
     To run that and get a command line use the docker run command:
+
     ```
     sudo docker run --rm -it daviduser/cpp-simple-sockets /bin/bash
+
     ```
 * The .travis.yml build a _Ubuntu Trusty_ with _GCC g++ 5_ on *travis-ci*
