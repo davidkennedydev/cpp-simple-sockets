@@ -1,33 +1,39 @@
 dist: trusty
 sudo: required
 
-language: cpp
+language: generic
 compiler:
-  - g++
+- gcc
+- clang
 
-# Setup repos etc before installation
-before_install:
-  - sudo add-apt-repository -y ppa:ubuntu-toolchain-r/test
-  - sudo apt-get update -qq
+matrix:
+  include:
+  - compiler: gcc
+    before_install:
+      - sudo add-apt-repository -y ppa:ubuntu-toolchain-r/test
+      - sudo apt-get update -qq
 
-# Install dependencies
-install:
-  # install g++ 5 and libstdc++ 6
-  - sudo apt-get install -qq g++-5
-  - sudo apt-get install -qq libstdc++6
-  - sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-5 50
+    install:
+      # install compiler and standard library
+      - sudo apt-get install -qq g++-5
+      - sudo apt-get install -qq libstdc++6
+      - sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-5 50
 
-  # install tools
-  - sudo apt-get install -qq make
+      # install build tools
+      - sudo apt-get install -qq make
 
-  # install libraries
-  - sudo apt-get install -qq libpthread-stubs0-dev
-  - sudo apt-get install -qq libboost-dev
-  - sudo apt-get install -qq libboost-system-dev
-  
+      # install libraries
+      - sudo apt-get install -qq libpthread-stubs0-dev
+      - sudo apt-get install -qq libboost-dev
+      - sudo apt-get install -qq libboost-system-dev
+    before_script: 
+      - g++ --version
+
+  exclude:
+  - compiler: clang
+
 # command to run tests
 script: 
-  - g++ --version
   - make coverage
 
 after_success:
