@@ -1,9 +1,16 @@
 CXX ?= g++
 DEBUG = -g -D_GLIBCXX_DEBUG
 GCOV_FLAGS = -coverage
-FLAGS = -std=c++1y $(GCOV_FLAGS)
+FLAGS = -std=c++1y
+LLVM_STANDARD_lIBRARIES = -stdlib=libc++
 LIBRARIES = -lboost_system -pthread 
-COV=gcov
+
+ifeq ($(CXX), g++)
+	FLAGS += $(GCOV_FLAGS)
+endif
+ifeq ($(CXX), clang++)
+	LIBRARIES += $(LLVM_STANDARD_lIBRARIES)	
+endif
 
 BIN_PATH = bin
 
@@ -22,9 +29,9 @@ bin/%: %.cpp | bin
 test: bin/output_client bin/input_client
 	./bin/output_client
 	./bin/input_client
-
-coverage: $(DRIVERS) | test
-	$(COV) -r $^
+ifeq ($(CXX), g++)
+	gcov -r $(DRIVERS)
+endif
 
 clean:
 	-@rm -rf $(BIN_PATH) 2> /dev/null || true

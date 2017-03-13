@@ -9,6 +9,7 @@ compiler:
 matrix:
   include:
   - compiler: gcc
+    env: CXX=g++
     before_install:
       - sudo add-apt-repository -y ppa:ubuntu-toolchain-r/test
       - sudo apt-get update -qq
@@ -26,16 +27,36 @@ matrix:
       - sudo apt-get install -qq libpthread-stubs0-dev
       - sudo apt-get install -qq libboost-dev
       - sudo apt-get install -qq libboost-system-dev
-    before_script: 
-      - g++ --version
 
-  exclude:
+    before_script: 
+      - $CXX --version
+
+    after_success:
+      - bash <(curl -s https://codecov.io/bash) -X gcov
+
   - compiler: clang
+    env: CXX=clang++
+    before_install: 
+      - sudo add-apt-repository -y ppa:h-rayflood/llvm
+      - sudo apt-get update -qq
+
+    install:
+      - sudo apt-get install --allow-unauthenticated -qq clang-3.3
+      - sudo apt-get install --allow-unauthenticated -qq libc++-dev libc++1 libc++abi-dev libc++abi1
+
+      # install build tools
+      - sudo apt-get install -qq make
+
+      # install libraries
+      - sudo apt-get install -qq libpthread-stubs0-dev
+      - sudo apt-get install -qq libboost-dev
+      - sudo apt-get install -qq libboost-system-dev
+
+    before_script:
+      - $CXX --version
 
 # command to run tests
 script: 
-  - make coverage
+  - make test
 
-after_success:
-  - bash <(curl -s https://codecov.io/bash) -X gcov
 
