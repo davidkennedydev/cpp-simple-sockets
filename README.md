@@ -1,5 +1,7 @@
-[![Travis](https://img.shields.io/travis/DavidUser/cpp-simple-sockets.svg?maxAge=3600&label=build:%20GCC%205%20|%20C%2b%2b17%20)](https://travis-ci.org/DavidUser/cpp-simple-sockets)
 [![Codecov](https://img.shields.io/codecov/c/github/DavidUser/cpp-simple-sockets.svg)](https://codecov.io/gh/DavidUser/cpp-simple-sockets/)
+
+[![Travis](https://img.shields.io/travis/DavidUser/cpp-simple-sockets.svg?maxAge=3600&label=build:%20GCC%205%20|%20C%2b%2b17%20)](https://travis-ci.org/DavidUser/cpp-simple-sockets)
+[![Travis](https://img.shields.io/travis/DavidUser/cpp-simple-sockets.svg?maxAge=3600&label=build:%20Clang%203.3%20|%20C%2b%2b17%20)](https://travis-ci.org/DavidUser/cpp-simple-sockets)
 
 # cpp-simple-sockets
 An stupid library to use sockets easy. 
@@ -23,4 +25,5 @@ An stupid library to use sockets easy.
     sudo docker run --rm -it daviduser/cpp-simple-sockets /bin/bash
 
     ```
-* The .travis.yml build a _Ubuntu Trusty_ with _GCC g++ 5_ on *travis-ci*
+* The .travis.yml build a _Ubuntu Trusty_ with _GCC g++ 5_ on **travis-ci**
+
