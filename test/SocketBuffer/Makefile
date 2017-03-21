@@ -13,9 +13,8 @@ ifeq ($(CXX), clang++)
 endif
 
 BIN_PATH = bin
-
-DRIVERS = output_client.cpp input_client.cpp
-RUNABLE = $(%.cpp:bin/%)
+DRIVERS := $(shell ls *.cpp)
+RUNABLE := $(patsubst %.cpp, bin/%, $(DRIVERS))
 
 all: $(RUNABLE)
 
@@ -23,12 +22,11 @@ all: $(RUNABLE)
 $(BIN_PATH):
 	mkdir -p $@
 
-bin/%: %.cpp | bin
+bin/%: %.cpp | $(BIN_PATH)
 	$(CXX) $(FLAGS) $^ -o $@ $(LIBRARIES)
 
-test: bin/output_client bin/input_client
-	./bin/output_client
-	./bin/input_client
+test: $(RUNABLE)
+	for file in `ls bin/*`; do ./$$file; done
 ifeq ($(CXX), g++)
 	gcov -r $(DRIVERS)
 endif
