@@ -40,7 +40,7 @@ void server(void) {
 	message = std::string(buffer.begin(), buffer.begin() + bytesReaded);
 }
 
-#include "../../src/SocketBuffer.hpp"
+#include "../../src/ClientSocket.hpp"
 #include <ostream>
 
 /// Client side using simple sockets
@@ -50,8 +50,7 @@ void server(void) {
 void client(void) {
 	using namespace simple;
 
-	SocketBuffer buffer("localhost", 12345);
-	std::ostream out(&buffer);
+	ClientSocket out("localhost", 12345);
 
 	out << expectedMessage << std::endl;
 }

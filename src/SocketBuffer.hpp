@@ -5,39 +5,36 @@
 #include <boost/asio.hpp>
 #include <boost/asio/ip/tcp.hpp>
 #include <boost/array.hpp>
+#include <boost/icl/interval_set.hpp>
 
 namespace simple {
+	boost::asio::io_service io_service;
+
 	using std::string;
+	using boost::asio::ip::tcp;
 
 	class SocketBuffer : public std::streambuf {
+		friend class ClientSocket;
+
 		static constexpr unsigned int BUFFER_SIZE = 255;
 	public:
-		SocketBuffer (string address, unsigned short port);
-		virtual ~SocketBuffer ();
+		SocketBuffer();
+		virtual ~SocketBuffer();
 
 		int sync() override;
 
 	protected:
 		int underflow() override;
 
-	private:
-		boost::asio::io_service io_service;
-		boost::asio::ip::tcp::socket socket;
-		boost::asio::ip::tcp::resolver resolver;
 		boost::array<char, BUFFER_SIZE> outputBuffer, inputBuffer;
+
+	private:
+		tcp::socket socket;
 	};
 
-	SocketBuffer::SocketBuffer(string address, unsigned short port) :
-		socket(io_service), resolver(io_service) {
-
+	SocketBuffer::SocketBuffer() : socket(io_service) {
 		setp(outputBuffer.begin(), outputBuffer.end());
 		setg(inputBuffer.end(), inputBuffer.end(), inputBuffer.end());
-
-		using boost::asio::ip::tcp;
-		
-		tcp::resolver::query query(address, std::to_string(port));
-		tcp::resolver::iterator endpoint = this->resolver.resolve(query);
-		boost::asio::connect(this->socket, endpoint);
 	}
 
 	SocketBuffer::~SocketBuffer() {
@@ -45,8 +42,16 @@ namespace simple {
 	}
 
 	int SocketBuffer::sync() {
-		boost::system::error_code error_code;
-		boost::asio::write(this->socket, boost::asio::buffer(this->outputBuffer.data(), pptr() - pbase()), error_code);
+		using namespace boost;
+		using namespace boost::asio;
+
+		system::error_code error_code;
+		const size_t filledLength = pptr() - pbase();
+		mutable_buffers_1 buffer = asio::buffer(
+				this->outputBuffer.data(),
+				filledLength);
+
+		write(this->socket, buffer, error_code);
 		setp(outputBuffer.begin(), outputBuffer.end());
 		
 		return (error_code == boost::asio::error::broken_pipe)? -1 : 0;

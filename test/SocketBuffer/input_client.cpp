@@ -37,7 +37,7 @@ void server(void) {
 	boost::asio::write(socket, boost::asio::buffer(expectedMessage), error);
 }
 
-#include "../../src/SocketBuffer.hpp"
+#include "../../src/ClientSocket.hpp"
 #include <istream>
 
 /// Client side using simple sockets
@@ -47,8 +47,7 @@ void server(void) {
 void client(void) {
 	using namespace simple;
 
-	SocketBuffer socketBuffer("localhost", PORT);
-	std::istream in(&socketBuffer);
+	ClientSocket in("localhost", PORT);
 	
 	std::string word;
 

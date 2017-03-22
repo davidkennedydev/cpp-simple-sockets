@@ -9,6 +9,7 @@ An stupid library to use sockets easy.
 # Current features
 * Output buffer to socket asio.
 * Input buffer to sockets asio.
+* Client socket stream
 
 ## Builds
 * This Dockerfile build and test on ubuntu with gcc.
