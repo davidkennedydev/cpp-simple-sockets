@@ -1,3 +1,5 @@
+#pragma once
+
 #include <streambuf>
 #include <istream>
 #include <ostream>
@@ -14,7 +16,7 @@ namespace simple {
 	using boost::asio::ip::tcp;
 
 	class SocketBuffer : public std::streambuf {
-		friend class ClientSocket;
+		friend class ClientSocketStream;
 
 		static constexpr unsigned int BUFFER_SIZE = 255;
 	public:

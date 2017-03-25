@@ -9,20 +9,20 @@ namespace simple {
 	using std::string;
 	using boost::asio::ip::tcp;
 
-	class ClientSocket : public std::istream, public std::ostream {
+	class ClientSocketStream : public std::iostream {
 	public:
 		using Port = unsigned short;
 
-		ClientSocket (string address, Port port);
-		virtual ~ClientSocket() = default;
+		ClientSocketStream (string address, Port port);
+		virtual ~ClientSocketStream() = default;
 
 	private:
 		tcp::resolver resolver;
 		SocketBuffer buffer;
 	};
 
-	ClientSocket::ClientSocket(string address, Port port) :
-		std::istream(&this->buffer), std::ostream(&this->buffer), 
+	ClientSocketStream::ClientSocketStream(string address, Port port) :
+		std::iostream(&this->buffer), 
 		resolver(io_service) {
 		
 		tcp::resolver::query query(address, std::to_string(port));
