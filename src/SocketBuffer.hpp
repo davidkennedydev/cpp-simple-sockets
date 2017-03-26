@@ -17,6 +17,7 @@ namespace simple {
 
 	class SocketBuffer : public std::streambuf {
 		friend class ClientSocketStream;
+		friend class ServerSocketStream;
 
 		static constexpr unsigned int BUFFER_SIZE = 255;
 	public:
