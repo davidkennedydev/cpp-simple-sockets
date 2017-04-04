@@ -29,7 +29,16 @@ const int PORT = 12346;
 void server(void) {
 	simple::ServerSocketStream client(PORT);
 
-	client >> message;
+	std::string word;
+
+	client >> word;
+	message += word;
+	message += ' ';
+	client >> word;
+	message += word;
+	message += '\n';
+
+	bytesReaded = message.size();
 
 	simple::ServerSocketStream nonClient(PORT); // you can connect another client
 }
@@ -50,7 +59,8 @@ void client(void) {
 	tcp::socket socket(io_service);
 	boost::asio::connect(socket, endpoint);
 
-	socket.write_some(boost::asio::buffer(expectedMessage.data(), expectedMessage.length()));
+	boost::asio::write(socket, boost::asio::buffer(expectedMessage), error);
+	std::this_thread::sleep_for(std::chrono::milliseconds(100));
 	boost::asio::connect(socket, endpoint); // close nonClient await
 }
 

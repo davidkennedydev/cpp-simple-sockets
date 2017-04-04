@@ -30,15 +30,12 @@ void server(void) {
 	simple::ServerSocketStreamFactory server(PORT);
 	
 	simple::ServerSocketStream & client = server.getSocket();
-	std::cout << "Client 1:" << std::endl;
 	client << expectedMessage << std::flush;
 
 	simple::ServerSocketStream & client2 = server.getSocket();
-	std::cout << "Client 2:" << std::endl;
 	client2 << expectedMessage << std::flush;
 
 	simple::ServerSocketStream & client3 = server.getSocket();
-	std::cout << "Client 3:" << std::endl;
 	client3 << expectedMessage << std::flush;
 }
 
@@ -60,14 +57,10 @@ void client(void) {
 
 	boost::array<char, 128> buffer;
 	boost::system::error_code error;
-
-	std::cout << "Client trying read..." << std::endl;
 	size_t length = socket.read_some(boost::asio::buffer(buffer.data(), buffer.size()), error);
 
 	message = std::string(buffer.cbegin(), buffer.cbegin() + length);
 	bytesReaded = message.size();
-
-	std::cout << "received message: " << message << std::endl;
 }
 
 #include <thread>

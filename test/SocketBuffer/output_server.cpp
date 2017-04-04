@@ -29,7 +29,7 @@ const int PORT = 12346;
 void server(void) {
 	simple::ServerSocketStream client(PORT);
 
-	client << expectedMessage << std::flush;
+	client << expectedMessage << std::endl;
 
 	simple::ServerSocketStream nonClient(PORT); // you can connect another client
 }
@@ -53,13 +53,10 @@ void client(void) {
 	boost::array<char, 128> buffer;
 	boost::system::error_code error;
 
-	std::cout << "Client trying read..." << std::endl;
 	size_t length = socket.read_some(boost::asio::buffer(buffer.data(), buffer.size()), error);
 
 	message = std::string(buffer.cbegin(), buffer.cbegin() + length);
 	bytesReaded = message.size();
-
-	std::cout << "received message: " << message << std::endl;
 
 	boost::asio::connect(socket, endpoint); // close nonClient await
 }
