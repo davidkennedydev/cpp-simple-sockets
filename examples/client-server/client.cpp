@@ -8,7 +8,7 @@ using namespace std;
 
 int main(void) {
 
-	Socket server("localhost", "12345"); // Open a connection with the server.
+	Connection server("localhost", "12345"); // Open a connection with the server.
 
 	server << "Is someone there?"; 
 

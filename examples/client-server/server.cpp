@@ -8,7 +8,7 @@ using namespace std;
 
 int main(void) {
 
-	Socket client(12345, 10, 20000); // Waits for a client connections on 12345 and redirect they to one 10 ports between 20000 and 20009.
+	Connection client(12345); // Waits for a client connections on 12345 and redirect they to one 10 ports between 20000 and 20009.
 
 	// Everything bellow will be asynchronously executed to each client connected.
 	string question;
