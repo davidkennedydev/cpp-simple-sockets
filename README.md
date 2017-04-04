@@ -6,10 +6,39 @@
 # cpp-simple-sockets
 An stupid library to use sockets easy. 
 
+##Client-Server
+
+### Client side
+
+```c++
+Connection server("localhost", "12345"); // Open a connection with the server.
+
+server << "Is someone there?"; 
+
+string response;
+server >> response;
+```
+
+### Server side
+
+```c++
+Connection client(12345); // Waits for a client connections on 12345
+
+// Everything bellow will be asynchronously executed to each client connected.
+string question;
+client >> question;
+
+std::cout << question << std::endl;
+```
+
+
 # Current features
-* Output buffer to socket asio.
-* Input buffer to sockets asio.
-* Client socket stream
+* Output buffer to socket asio;
+* Input buffer to sockets asio;
+* Client socket stream;
+* Server socket stream;
+* Server socket stream factory;
+* Connection behaviour like client side and multiclient server side;
 
 ## Builds
 * This Dockerfile build and test on ubuntu with gcc.
@@ -27,4 +56,5 @@ An stupid library to use sockets easy.
 
     ```
 * The .travis.yml build a _Ubuntu Trusty_ with _GCC g++ 5_ on **travis-ci**
+
 
