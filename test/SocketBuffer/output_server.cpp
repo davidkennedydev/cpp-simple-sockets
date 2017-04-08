@@ -16,7 +16,7 @@ using boost::asio::ip::tcp;
 
 size_t bytesReaded;
 std::string message;
-std::string expectedMessage = "I'm here!\n";
+std::string expectedMessage = "I'm here!";
 boost::system::error_code error;
 
 const int PORT = 12346;
@@ -29,7 +29,7 @@ const int PORT = 12346;
 void server(void) {
 	simple::ServerSocketStream client(PORT);
 
-	client << expectedMessage << std::endl;
+	client << expectedMessage << std::flush;
 
 	simple::ServerSocketStream nonClient(PORT); // you can connect another client
 }

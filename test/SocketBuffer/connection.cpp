@@ -1,6 +1,5 @@
 #include <thread>
 #include <sys/types.h>
-#include <signal.h>
 
 #include "../../src/Connection.hpp"
 
@@ -13,15 +12,10 @@ const std::string clientExpectedMessage = "messageToClient",
 std::string clientReceivedMessage, serverReceivedMessage;
 
 void server() {
-	std::thread thread([] () {
-		Connection client(PORT);
+	Connection client(PORT, SINGLE); // single client connection
 
-		client << clientExpectedMessage << std::endl;
-		client >> serverReceivedMessage;
-	});
-	std::this_thread::sleep_for(std::chrono::milliseconds(300));
-	thread.detach();
-	thread.~thread();
+	client << clientExpectedMessage << std::endl;
+	client >> serverReceivedMessage;
 }
 
 void client() {
@@ -37,5 +31,9 @@ int main(void) {
 	client();
 
 	serverThread.join();
+
+	assert(clientExpectedMessage == clientReceivedMessage);
+	assert(serverExpectedMessage == serverReceivedMessage);
+
 	return 0;
 }

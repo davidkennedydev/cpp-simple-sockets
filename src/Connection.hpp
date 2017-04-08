@@ -10,35 +10,38 @@
 
 namespace simple {
 
-	class Connection : public std::iostream {
-	public:
-		using Port = unsigned short;
+  enum ServerConnectionType { SINGLE, MULTI };
 
-		Connection (Port);
-		Connection (std::string ip, Port);
-		virtual ~Connection() {}
+  class Connection : public std::iostream {
+   public:
+    using Port = unsigned short;
 
-	private:
-		union {
-			ClientSocketStream stream;
-			ServerSocketStreamFactory factory;
-		};
-	};
+    explicit Connection (const Port, 
+        const ServerConnectionType = MULTI);
 
-	Connection::Connection (Port port) :
-		factory (port)
-       	{
-		pid_t pid;
-		do {
-			this->rdbuf(factory.getSocket().rdbuf());
-			pid = fork();
-		} while (pid != 0);
-	}
+    Connection (const std::string ip, const Port);
+    virtual ~Connection() {}
 
-	Connection::Connection (std::string ip, Port port) :
-		stream (ip, port)
-	{
-		this->rdbuf(stream.rdbuf());
-	}
-	
+   private:
+    union {
+      ClientSocketStream stream;
+      ServerSocketStreamFactory factory;
+    };
+  };
+
+  Connection::Connection (const Port port, 
+      const ServerConnectionType serverType) 
+      : factory (port) {
+    do {
+      this->rdbuf(factory.getSocket().rdbuf());
+      if (serverType == SINGLE) break;
+    } while ( fork() ); // on father process repeat, child comes out
+    // terminate construction of client connection
+  }
+
+  Connection::Connection (const std::string ip, const Port port) 
+      : stream (ip, port) {
+    this->rdbuf(stream.rdbuf());
+  }
+  
 } /* simple */ 
