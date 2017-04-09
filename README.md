@@ -6,14 +6,15 @@
 # cpp-simple-sockets
 An stupid library to use sockets easy. 
 
-##Client-Server
+## Client-Server
+Client-server applications can be **simple** writed like below.
 
 ### Client side
 
 ```c++
 Connection server("localhost", "12345"); // Open a connection with the server.
 
-server << "Is someone there?"; 
+server << "Hey server, are you here?" << std::endl; 
 
 string response;
 server >> response;
@@ -22,13 +23,13 @@ server >> response;
 ### Server side
 
 ```c++
-Connection client(12345); // Waits for a client connections on 12345
+Connection client(12345); // Waits for client connections on 12345
 
 // Everything bellow will be asynchronously executed to each client connected.
 string question;
 client >> question;
 
-std::cout << question << std::endl;
+client << "Hi client. I'm your server." << std::endl;
 ```
 
 
@@ -55,6 +56,6 @@ std::cout << question << std::endl;
     sudo docker run --rm -it daviduser/cpp-simple-sockets /bin/bash
 
     ```
-* The .travis.yml build a _Ubuntu Trusty_ with _GCC g++ 5_ on **travis-ci**
+* The .travis.yml configure build on [**travis-ci**](https://travis-ci.org/DavidUser/cpp-simple-sockets)
 
 
