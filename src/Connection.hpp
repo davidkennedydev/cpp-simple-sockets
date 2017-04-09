@@ -20,28 +20,33 @@ namespace simple {
         const ServerConnectionType = MULTI);
 
     Connection (const std::string ip, const Port);
-    virtual ~Connection() {}
+    virtual ~Connection() = default;
 
    private:
-    union {
+
+    union SocketStreamUnion {
       ClientSocketStream stream;
       ServerSocketStreamFactory factory;
-    };
+
+      SocketStreamUnion(Port port) : factory(port) {}
+      SocketStreamUnion(std::string ip, Port port) : stream(ip, port) {}
+      ~SocketStreamUnion() {}
+    } socketUnion;
   };
 
   Connection::Connection (const Port port, 
       const ServerConnectionType serverType) 
-      : factory (port) {
+      : std::iostream(nullptr), socketUnion(port) {
     do {
-      this->rdbuf(factory.getSocket().rdbuf());
+      this->rdbuf(socketUnion.factory.getSocket().rdbuf());
       if (serverType == SINGLE) break;
     } while ( fork() ); // on father process repeat, child comes out
     // terminate construction of client connection
   }
 
   Connection::Connection (const std::string ip, const Port port) 
-      : stream (ip, port) {
-    this->rdbuf(stream.rdbuf());
+      : std::iostream(nullptr), socketUnion(ip, port) {
+    this->rdbuf(socketUnion.stream.rdbuf());
   }
   
 } /* simple */ 
