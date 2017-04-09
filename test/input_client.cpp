@@ -10,7 +10,6 @@
 #include <list>
 #include <assert.h>
 #include <sstream>
-#include "../../src/ServerSocketStreamFactory.hpp"
 
 using boost::asio::ip::tcp;
 
@@ -27,18 +26,18 @@ const int PORT = 12346;
  * when someone connects send a message.
  */
 void server(void) {
-	simple::ServerSocketStreamFactory server(PORT);
-	
-	simple::ServerSocketStream & client = server.getSocket();
-	client << expectedMessage << std::flush;
+	boost::asio::io_service io_service;
 
-	simple::ServerSocketStream & client2 = server.getSocket();
-	client2 << expectedMessage << std::flush;
+	const unsigned short port = PORT;
+	tcp::acceptor acceptor(io_service, tcp::endpoint(tcp::v4(), port));
 
-	simple::ServerSocketStream & client3 = server.getSocket();
-	client3 << expectedMessage << std::flush;
+	tcp::socket socket(io_service);
+	acceptor.accept(socket);
+
+	boost::asio::write(socket, boost::asio::buffer(expectedMessage), error);
 }
 
+#include "../src/ClientSocketStream.hpp"
 #include <istream>
 
 /// Client side using simple sockets
@@ -46,20 +45,19 @@ void server(void) {
  * Connect to server and receive a message.
  */
 void client(void) {
-	boost::asio::io_service io_service;
+	using namespace simple;
 
-	tcp::resolver resolver(io_service);
-	tcp::resolver::query query("localhost", std::to_string(PORT));
-	tcp::resolver::iterator endpoint = resolver.resolve(query);
+	ClientSocketStream in("localhost", PORT);
+	
+	std::string word;
 
-	tcp::socket socket(io_service);
-	boost::asio::connect(socket, endpoint);
+	in >> word;
+	message += word;
+	message += ' ';
+	in >> word;
+	message += word;
+	message += '\n';
 
-	boost::array<char, 128> buffer;
-	boost::system::error_code error;
-	size_t length = socket.read_some(boost::asio::buffer(buffer.data(), buffer.size()), error);
-
-	message = std::string(buffer.cbegin(), buffer.cbegin() + length);
 	bytesReaded = message.size();
 }
 
@@ -71,16 +69,14 @@ void client(void) {
  * Then test if communication is ok.
  */
 int main(void) {
-	std::thread serverThread(server);
+	std::thread serverRun(server);
 	std::this_thread::sleep_for(std::chrono::milliseconds(100));
 	client();
-	client();
-	client();
+	serverRun.join();
 	
 	assert(error == 0);
 	assert(bytesReaded == expectedMessage.size());
 	assert(message == expectedMessage);
 
-	serverThread.join();
 	return 0;
 }

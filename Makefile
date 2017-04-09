@@ -1,4 +1,4 @@
-TEST_PATH=./test/SocketBuffer
+TEST_PATH=./test
 TARGETS=all test clean coverage
 
 .PHONY: $(TARGETS)

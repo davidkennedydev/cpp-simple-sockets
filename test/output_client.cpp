@@ -40,7 +40,7 @@ void server(void) {
 	message = std::string(buffer.begin(), buffer.begin() + bytesReaded);
 }
 
-#include "../../src/ClientSocketStream.hpp"
+#include "../src/ClientSocketStream.hpp"
 #include <ostream>
 
 /// Client side using simple sockets

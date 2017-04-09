@@ -10,7 +10,7 @@
 #include <list>
 #include <assert.h>
 #include <sstream>
-#include "../../src/ServerSocketStream.hpp"
+#include "../src/ServerSocketStream.hpp"
 
 using boost::asio::ip::tcp;
 

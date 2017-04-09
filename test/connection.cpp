@@ -1,7 +1,7 @@
 #include <thread>
 #include <sys/types.h>
 
-#include "../../src/Connection.hpp"
+#include "../src/Connection.hpp"
 
 using namespace simple;
 
