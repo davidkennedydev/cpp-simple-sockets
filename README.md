@@ -3,6 +3,20 @@
 [![Travis](https://img.shields.io/travis/DavidUser/cpp-simple-sockets.svg?maxAge=3600&label=build:%20GCC%205%20|%20C%2b%2b17%20)](https://travis-ci.org/DavidUser/cpp-simple-sockets)
 [![Travis](https://img.shields.io/travis/DavidUser/cpp-simple-sockets.svg?maxAge=3600&label=build:%20Clang%203.3%20|%20C%2b%2b17%20)](https://travis-ci.org/DavidUser/cpp-simple-sockets)
 
+[
+  ![Quality gate](https://sonarcloud.io/api/project_badges/measure?project=cpp-simple-sockets&metric=alert_status)
+  ![Security](https://sonarcloud.io/api/project_badges/measure?project=cpp-simple-sockets&metric=security_rating)
+  ![Maintainability](https://sonarcloud.io/api/project_badges/measure?project=cpp-simple-sockets&metric=sqale_rating)
+  ![Reliability](https://sonarcloud.io/api/project_badges/measure?project=cpp-simple-sockets&metric=reliability_rating)
+](https://sonarcloud.io/dashboard?id=cpp-simple-sockets)
+
+[
+  ![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=cpp-simple-sockets&metric=vulnerabilities)
+  ![Lines](https://sonarcloud.io/api/project_badges/measure?project=cpp-simple-sockets&metric=ncloc)
+  ![Duplication](https://sonarcloud.io/api/project_badges/measure?project=cpp-simple-sockets&metric=duplicated_lines_density)
+  ![Bugs](https://sonarcloud.io/api/project_badges/measure?project=cpp-simple-sockets&metric=bugs)
+](https://sonarcloud.io/dashboard?id=cpp-simple-sockets)
+
 # cpp-simple-sockets
 An stupid library to use sockets easy. 
 
