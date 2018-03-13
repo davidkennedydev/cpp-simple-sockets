@@ -60,7 +60,7 @@ client << "Hi client. I'm your server." << std::endl;
     Build and run that container with command:
 
     ```
-    sudo docker build -t daviduser/cpp-simple-sockets
+    sudo docker build -t daviduser/cpp-simple-sockets .
 
     sudo docker run --rm -it daviduser/cpp-simple-sockets
     ```
