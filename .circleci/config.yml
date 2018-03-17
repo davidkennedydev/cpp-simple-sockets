@@ -5,9 +5,5 @@ jobs:
       - image: codenvy/cpp
     steps:
       - checkout
-      - run:
-          name: Build
-          command: make
-      - run:
-          name: Test
-          comand: make test
+      - run: make
+      - run: make test
