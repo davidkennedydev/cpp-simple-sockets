@@ -1,9 +1,7 @@
 version: 2
 jobs:
   build:
-    docker:
-      - image: codenvy/cpp
     steps:
       - checkout
-      - run: make
-      - run: make test
+      - run: docker build -t DavidUser/cpp-simple-socket
+      - run: docker run --rm DavidUser/cpp-simple-socket
