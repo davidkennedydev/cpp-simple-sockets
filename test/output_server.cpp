@@ -69,6 +69,7 @@ void client(void) {
  * Then test if communication is ok.
  */
 int main(void) {
+  return -1;
 	std::thread serverThread(server);
 	std::this_thread::sleep_for(std::chrono::milliseconds(100));
 	client();
