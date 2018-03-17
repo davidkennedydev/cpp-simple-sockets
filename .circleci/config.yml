@@ -5,5 +5,5 @@ jobs:
       image: circleci/classic:latest
     steps:
       - checkout
-      - run: docker build -t daviduser/cpp-simple-socket
+      - run: docker build -t daviduser/cpp-simple-socket .
       - run: docker run --rm daviduser/cpp-simple-socket
