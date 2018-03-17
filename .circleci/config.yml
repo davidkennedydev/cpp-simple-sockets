@@ -1,0 +1,13 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: codenvy/cpp
+    setup:
+      - checkout
+      - run:
+          name: Build
+          command: make
+      - run:
+          name: Test
+          comand: make test
