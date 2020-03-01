@@ -35,3 +35,6 @@
 *.gcno
 *.gcda
 *.gcov
+
+# You Complete Me config file
+.ycm_extra_conf.py

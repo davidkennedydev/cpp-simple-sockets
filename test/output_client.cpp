@@ -66,7 +66,7 @@ int main(void) {
 	client();
 	serverRun.join();
 
-	assert(error == 0);
+	assert(!error);
 	assert(bytesReaded == expectedMessage.size() + 1);
 	assert(message == expectedMessage + "\n");
 

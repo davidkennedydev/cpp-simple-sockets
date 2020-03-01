@@ -77,7 +77,7 @@ int main(void) {
 	client();
 	client();
 	
-	assert(error == 0);
+	assert(!error);
 	assert(bytesReaded == expectedMessage.size());
 	assert(message == expectedMessage);
 

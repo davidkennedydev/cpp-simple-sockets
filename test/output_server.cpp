@@ -73,7 +73,7 @@ int main(void) {
 	std::this_thread::sleep_for(std::chrono::milliseconds(100));
 	client();
 	
-	assert(error == 0);
+	assert(!error);
 	assert(bytesReaded == expectedMessage.size());
 	assert(message == expectedMessage);
 
